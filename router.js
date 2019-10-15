@@ -53,9 +53,10 @@ exports.readFileBySuffixName = function (pathname, fs, request, response) {
                 //断点续传，获取分段的位置
                 var range = request.headers.range;
                 if (!range) {
+                    range = 'bytes=0-'+ stats.size +'';
                     //206状态码表示客户端通过发送范围请求头Range抓取到了资源的部分数据
                     //416状态码表示所请求的范围无法满足
-                    return response.end('416 no range');
+                    // return response.end('416 no range');
                 }
                 //替换、切分，请求范围格式为：Content-Range: bytes 0-2000/4932
                 var positions = range.replace(/bytes=/, "").split("-");
